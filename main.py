@@ -3,8 +3,7 @@ import cv2
 import mediapipe as mp
 import pickle
 import pandas as pd
-import webbrowser
-import os
+
 
 #mediapipe variables
 mp_drawing = mp.solutions.drawing_utils
@@ -51,24 +50,14 @@ with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) a
             gesture_class = model.predict(X)[0]
             gesture_prob = model.predict_proba(X)[0]
             
+            #printing the results
             cv2.putText(image, gesture_class, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-            print(type(gesture_class), gesture_prob)
+            print(gesture_class, gesture_prob)
             
-            if gesture_class == 'up':
-                webbrowser.get(chrome).open_new('www.google.com')
-            elif gesture_class == 'down':
-                webbrowser.get(chrome).open_new('www.youtube.com')
-            elif gesture_class == 'land':
-                os.startfile(aMusic) 
-            elif gesture_class == 'right':
-                os.startfile(od)
-            
-        
-        
         except:
             pass
         
-        cv2.imshow('Hand Tracking', image)
+        cv2.imshow('handTracker', image)
 
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
